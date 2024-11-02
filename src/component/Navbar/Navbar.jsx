@@ -1,6 +1,23 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const [theme, setTheme] = useState("synthwave")
+
+  const handleThemeChange = (e) => {
+    if (e.target.checked) {
+      setTheme("dark")
+    } else {
+      setTheme("synthwave")
+    }
+  }
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme)
+    const getTheme = localStorage.getItem("theme")
+    document.querySelector("html").setAttribute("data-theme", getTheme)
+  }, [theme])
+
   return (
     <div className="shadow-md fixed top-0 left-0 right-0">
       <div className="navbar container mx-auto">
@@ -15,7 +32,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div>
-          <input type="checkbox" className="toggle" />
+          <input onChange={handleThemeChange} type="checkbox" className="toggle" />
         </div>
       </div>
     </div>
